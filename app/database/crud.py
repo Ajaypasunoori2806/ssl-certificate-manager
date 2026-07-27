@@ -1,3 +1,7 @@
+def get_certificate_by_id(db, certificate_id):
+    return db.query(CertificateRequest).filter(
+        CertificateRequest.id == certificate_id
+    ).first()
 from sqlalchemy.orm import Session
 
 from app.database.models import CertificateRequest

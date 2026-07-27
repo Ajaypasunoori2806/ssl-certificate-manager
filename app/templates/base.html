@@ -2,36 +2,35 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SSL Certificate Manager{% endblock %}</title>
 
-    <title>SSL Certificate Manager</title>
-
-    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
-
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 
 <body>
 
-    <div class="sidebar">
+    <div class="container">
 
-        <h2>SSL Manager</h2>
+        <aside class="sidebar">
 
-        <a href="/">Dashboard</a>
+            <h2>SSL Manager</h2>
 
-        <a href="/create-request">Create CSR</a>
+            <ul>
+                <li><a href="/">🏠 Dashboard</a></li>
+                <li><a href="/create-request">➕ Create CSR</a></li>
+                <li><a href="/certificates">📄 Certificates</a></li>
+            </ul>
 
-        <a href="/requests">Certificate Requests</a>
+        </aside>
 
-        <a href="/certificates">Certificates</a>
+        <main class="content">
 
-    </div>
+            {% block content %}
+            {% endblock %}
 
-
-    <div class="content">
-
-        {% block content %}
-        {% endblock %}
+        </main>
 
     </div>
 

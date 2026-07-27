@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Create Certificate Request</h1>
+
+<form method="post" action="/generate-csr">
+
+    <label>Common Name (Domain)</label><br>
+    <input type="text" name="common_name" required><br><br>
+
+    <label>Organization</label><br>
+    <input type="text" name="organization" required><br><br>
+
+    <label>Organizational Unit</label><br>
+    <input type="text" name="organizational_unit"><br><br>
+
+    <label>Country</label><br>
+    <input type="text" name="country" maxlength="2" required><br><br>
+
+    <label>State</label><br>
+    <input type="text" name="state" required><br><br>
+
+    <label>City</label><br>
+    <input type="text" name="locality" required><br><br>
+
+    <label>Email</label><br>
+    <input type="email" name="email"><br><br>
+
+    <button type="submit">
+        Generate CSR
+    </button>
+
+</form>
+
+{% endblock %}

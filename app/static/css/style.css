@@ -1,0 +1,83 @@
+body {
+
+    margin: 0;
+
+    font-family: Arial;
+
+    background: #f5f5f5;
+
+}
+
+.sidebar {
+
+    position: fixed;
+
+    width: 230px;
+
+    height: 100vh;
+
+    background: #1E3A8A;
+
+    color: white;
+
+    padding: 20px;
+
+}
+
+.sidebar h2 {
+
+    text-align: center;
+
+}
+
+.sidebar a {
+
+    display: block;
+
+    color: white;
+
+    text-decoration: none;
+
+    padding: 12px;
+
+    margin-top: 10px;
+
+    border-radius: 5px;
+
+}
+
+.sidebar a:hover {
+
+    background: #2563EB;
+
+}
+
+.content {
+
+    margin-left: 250px;
+
+    padding: 30px;
+
+}
+
+.cards {
+
+    display: flex;
+
+    gap: 20px;
+
+}
+
+.card {
+
+    width: 220px;
+
+    background: white;
+
+    padding: 20px;
+
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>SSL Certificate Manager</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <h2>SSL Manager</h2>
+
+        <a href="/">Dashboard</a>
+
+        <a href="/create-request">Create CSR</a>
+
+        <a href="/requests">Certificate Requests</a>
+
+        <a href="/certificates">Certificates</a>
+
+    </div>
+
+
+    <div class="content">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</body>
+
+</html>

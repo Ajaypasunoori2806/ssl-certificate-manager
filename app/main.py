@@ -1,13 +1,21 @@
-from fastapi import Form
+from app.database.database import SessionLocal
+from app.database.crud import (
+    create_certificate_request,
+    get_all_certificate_requests,
+)
+from app.database.database import Base, engine
+from app.database import models
+
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
 from app.services.certificate_service import (
     generate_key_and_csr,
     save_private_key,
     save_csr,
 )
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
 app = FastAPI(
     title="SSL Certificate Manager",
@@ -17,6 +25,8 @@ app = FastAPI(
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 templates = Jinja2Templates(directory="app/templates")
+
+Base.metadata.create_all(bind=engine)
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -37,7 +47,6 @@ async def create_request(request: Request):
     )
 
 
-# 👇 Add this entire block below the create_request() function
 @app.post("/generate-csr")
 async def generate_csr(
     common_name: str = Form(...),
@@ -64,8 +73,44 @@ async def generate_csr(
     save_private_key(private_key, key_file)
     save_csr(csr, csr_file)
 
+    db = SessionLocal()
+
+    create_certificate_request(
+        db=db,
+        common_name=common_name,
+        organization=organization,
+        organizational_unit=organizational_unit,
+        country=country,
+        state=state,
+        locality=locality,
+        email=email,
+        key_path=key_file,
+        csr_path=csr_file,
+    )
+
+    db.close()
+
     return {
         "message": "CSR generated successfully!",
         "private_key": key_file,
         "csr": csr_file,
     }
+
+
+@app.get("/certificates", response_class=HTMLResponse)
+async def list_certificates(request: Request):
+
+    db = SessionLocal()
+
+    certificates = get_all_certificate_requests(db)
+
+    db.close()
+
+    return templates.TemplateResponse(
+        request=request,
+        name="certificates.html",
+        context={
+            "request": request,
+            "certificates": certificates,
+        },
+    )

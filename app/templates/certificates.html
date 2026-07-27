@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Inventory</title>
+</head>
+
+<body>
+
+    <h1>Certificate Inventory</h1>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Common Name</th>
+                <th>Organization</th>
+                <th>Status</th>
+                <th>Created At</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for certificate in certificates %}
+            <tr>
+                <td>{{ certificate.id }}</td>
+                <td>{{ certificate.common_name }}</td>
+                <td>{{ certificate.organization }}</td>
+                <td>{{ certificate.status }}</td>
+                <td>{{ certificate.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+</body>
+
+</html>

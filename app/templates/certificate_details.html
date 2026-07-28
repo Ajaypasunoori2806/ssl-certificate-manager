@@ -1,130 +1,193 @@
 {% extends "base.html" %}
 
+{% block title %}
+Certificate Details
+{% endblock %}
+
 {% block content %}
 
-<h1>Certificate Details</h1>
+<div class="container-fluid">
 
-<br>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-<table border="1" cellpadding="10" cellspacing="0" width="70%">
+        <h2>
+            <i class="bi bi-file-earmark-lock"></i>
+            Certificate Details
+        </h2>
 
-    <tr>
-        <th colspan="2">
-            General Information
-        </th>
-    </tr>
+        <a href="/certificates" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Back to Inventory
+        </a>
 
-    <tr>
-        <td><b>ID</b></td>
-        <td>{{ certificate.id }}</td>
-    </tr>
+    </div>
 
-    <tr>
-        <td><b>Common Name</b></td>
-        <td>{{ certificate.common_name }}</td>
-    </tr>
+    <div class="card shadow-sm mb-4">
 
-    <tr>
-        <td><b>Organization</b></td>
-        <td>{{ certificate.organization }}</td>
-    </tr>
+        <div class="card-header bg-primary text-white">
 
-    <tr>
-        <td><b>Organizational Unit</b></td>
-        <td>{{ certificate.organizational_unit }}</td>
-    </tr>
+            <h5 class="mb-0">
+                General Information
+            </h5>
 
-    <tr>
-        <td><b>Country</b></td>
-        <td>{{ certificate.country }}</td>
-    </tr>
+        </div>
 
-    <tr>
-        <td><b>State</b></td>
-        <td>{{ certificate.state }}</td>
-    </tr>
+        <div class="card-body">
 
-    <tr>
-        <td><b>Locality</b></td>
-        <td>{{ certificate.locality }}</td>
-    </tr>
+            <table class="table table-bordered align-middle">
 
-    <tr>
-        <td><b>Email</b></td>
-        <td>{{ certificate.email }}</td>
-    </tr>
+                <tbody>
 
-</table>
+                    <tr>
+                        <th width="30%">ID</th>
+                        <td>{{ certificate.id }}</td>
+                    </tr>
 
-<br>
+                    <tr>
+                        <th>Common Name</th>
+                        <td>{{ certificate.common_name }}</td>
+                    </tr>
 
-<table border="1" cellpadding="10" cellspacing="0" width="70%">
+                    <tr>
+                        <th>Organization</th>
+                        <td>{{ certificate.organization }}</td>
+                    </tr>
 
-    <tr>
-        <th colspan="2">
-            Certificate Information
-        </th>
-    </tr>
+                    <tr>
+                        <th>Organizational Unit</th>
+                        <td>{{ certificate.organizational_unit }}</td>
+                    </tr>
 
-    <tr>
-        <td><b>Issuer</b></td>
-        <td>{{ certificate.issuer or "-" }}</td>
-    </tr>
+                    <tr>
+                        <th>Country</th>
+                        <td>{{ certificate.country }}</td>
+                    </tr>
 
-    <tr>
-        <td><b>Serial Number</b></td>
-        <td>{{ certificate.serial_number or "-" }}</td>
-    </tr>
+                    <tr>
+                        <th>State</th>
+                        <td>{{ certificate.state }}</td>
+                    </tr>
 
-    <tr>
-        <td><b>Valid From</b></td>
-        <td>{{ certificate.valid_from or "-" }}</td>
-    </tr>
+                    <tr>
+                        <th>Locality</th>
+                        <td>{{ certificate.locality }}</td>
+                    </tr>
 
-    <tr>
-        <td><b>Valid Until</b></td>
-        <td>{{ certificate.valid_until or "-" }}</td>
-    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ certificate.email }}</td>
+                    </tr>
 
-    <tr>
-        <td><b>Signature Algorithm</b></td>
-        <td>{{ certificate.signature_algorithm or "-" }}</td>
-    </tr>
+                </tbody>
 
-    <tr>
-        <td><b>Status</b></td>
-        <td>{{ certificate.status }}</td>
-    </tr>
+            </table>
 
-    <tr>
-        <td><b>Created At</b></td>
-        <td>{{ certificate.created_at }}</td>
-    </tr>
+        </div>
 
-</table>
+    </div>
 
-<br>
+    <div class="card shadow-sm mb-4">
 
-<h3>Downloads</h3>
+        <div class="card-header bg-success text-white">
 
-<a href="/download/csr/{{ certificate.id }}">
-    <button>Download CSR</button>
-</a>
+            <h5 class="mb-0">
+                Certificate Information
+            </h5>
 
-<a href="/download/key/{{ certificate.id }}">
-    <button>Download Private Key</button>
-</a>
+        </div>
 
-{% if certificate.certificate_path %}
-<a href="/download/certificate/{{ certificate.id }}">
-    <button>Download Certificate</button>
-</a>
-{% endif %}
+        <div class="card-body">
 
-<br><br>
+            <table class="table table-bordered align-middle">
 
-<a href="/certificates">
-    <button>⬅ Back to Inventory</button>
-</a>
+                <tbody>
+
+                    <tr>
+                        <th width="30%">Issuer</th>
+                        <td>{{ certificate.issuer or "-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Serial Number</th>
+                        <td>{{ certificate.serial_number or "-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Valid From</th>
+                        <td>{{ certificate.valid_from or "-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Valid Until</th>
+                        <td>{{ certificate.valid_until or "-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Signature Algorithm</th>
+                        <td>{{ certificate.signature_algorithm or "-" }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Status</th>
+                        <td>
+
+                            {% if certificate.status == "Signed" %}
+                            <span class="badge bg-success">Signed</span>
+                            {% else %}
+                            <span class="badge bg-warning text-dark">Generated</span>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Created At</th>
+                        <td>{{ certificate.created_at }}</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <div class="card shadow-sm">
+
+        <div class="card-header">
+
+            <h5 class="mb-0">
+                Downloads
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <a href="/download/csr/{{ certificate.id }}" class="btn btn-secondary me-2">
+                <i class="bi bi-download"></i>
+                Download CSR
+            </a>
+
+            <a href="/download/key/{{ certificate.id }}" class="btn btn-dark me-2">
+                <i class="bi bi-key"></i>
+                Download Private Key
+            </a>
+
+            {% if certificate.certificate_path %}
+
+            <a href="/download/certificate/{{ certificate.id }}" class="btn btn-success">
+                <i class="bi bi-file-earmark-check"></i>
+                Download Certificate
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

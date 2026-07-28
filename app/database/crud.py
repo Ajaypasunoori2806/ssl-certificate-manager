@@ -1,96 +1,34 @@
-from sqlalchemy.orm import Session
+def get_dashboard_statistics(db):
+    certificates = db.query(models.CertificateRequest).all()
 
-from app.database.models import CertificateRequest
+    total = len(certificates)
 
+    active = 0
+    expiring = 0
+    expired = 0
 
-def create_certificate_request(
-    db: Session,
-    common_name: str,
-    organization: str,
-    organizational_unit: str,
-    country: str,
-    state: str,
-    locality: str,
-    email: str,
-    key_path: str,
-    csr_path: str,
-):
-    certificate = CertificateRequest(
-        common_name=common_name,
-        organization=organization,
-        organizational_unit=organizational_unit,
-        country=country,
-        state=state,
-        locality=locality,
-        email=email,
-        key_path=key_path,
-        csr_path=csr_path,
-    )
+    from datetime import datetime, timedelta
 
-    db.add(certificate)
-    db.commit()
-    db.refresh(certificate)
+    today = datetime.utcnow()
 
-    return certificate
+    for cert in certificates:
 
+        if cert.valid_until:
 
-def get_all_certificate_requests(db: Session):
-    return db.query(CertificateRequest).all()
+            expiry = cert.valid_until
 
+            if expiry < today:
+                expired += 1
 
-def get_certificate_by_id(
-    db: Session,
-    certificate_id: int,
-):
-    return (
-        db.query(CertificateRequest)
-        .filter(CertificateRequest.id == certificate_id)
-        .first()
-    )
+            elif expiry <= today + timedelta(days=30):
+                expiring += 1
 
+            else:
+                active += 1
 
-def update_certificate_file(
-    db: Session,
-    certificate_id: int,
-    certificate_path: str,
-):
-    certificate = get_certificate_by_id(
-        db,
-        certificate_id,
-    )
-
-    if certificate:
-        certificate.certificate_path = certificate_path
-        certificate.status = "Signed"
-
-        db.commit()
-        db.refresh(certificate)
-
-    return certificate
-
-
-def update_certificate_metadata(
-    db: Session,
-    certificate_id: int,
-    issuer: str,
-    serial_number: str,
-    valid_from,
-    valid_until,
-    signature_algorithm: str,
-):
-    certificate = get_certificate_by_id(
-        db,
-        certificate_id,
-    )
-
-    if certificate:
-        certificate.issuer = issuer
-        certificate.serial_number = serial_number
-        certificate.valid_from = valid_from
-        certificate.valid_until = valid_until
-        certificate.signature_algorithm = signature_algorithm
-
-        db.commit()
-        db.refresh(certificate)
-
-    return certificate
+    return {
+        "total": total,
+        "active": active,
+        "expiring": expiring,
+        "expired": expired,
+    }

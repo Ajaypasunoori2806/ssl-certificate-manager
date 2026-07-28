@@ -1,19 +1,76 @@
 {% extends "base.html" %}
 
+{% block title %}
+Upload Certificate
+{% endblock %}
+
 {% block content %}
 
-<h2>Upload Signed Certificate</h2>
+<div class="container-fluid">
 
-<form action="/upload-certificate" method="post" enctype="multipart/form-data">
+    <div class="row justify-content-center">
 
-    <label>Certificate Request ID</label><br>
-    <input type="number" name="certificate_id" required><br><br>
+        <div class="col-lg-8">
 
-    <label>Select Certificate (.crt)</label><br>
-    <input type="file" name="certificate" accept=".crt" required><br><br>
+            <div class="card shadow-sm">
 
-    <button type="submit">Upload Certificate</button>
+                <div class="card-header bg-primary text-white">
 
-</form>
+                    <h4 class="mb-0">
+                        <i class="bi bi-upload"></i>
+                        Upload Signed Certificate
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <form action="/upload-certificate" method="post" enctype="multipart/form-data">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Certificate Request ID
+                            </label>
+
+                            <input type="number" name="certificate_id" class="form-control"
+                                placeholder="Enter Certificate ID" required>
+
+                        </div>
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Select Certificate (.crt)
+                            </label>
+
+                            <input type="file" name="certificate" class="form-control" accept=".crt" required>
+
+                            <div class="form-text">
+                                Upload the signed certificate received from your Certificate Authority.
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-cloud-upload"></i>
+                            Upload Certificate
+                        </button>
+
+                        <a href="/certificates" class="btn btn-secondary ms-2">
+                            Cancel
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

@@ -6,8 +6,125 @@ Dashboard
 
 {% block content %}
 
-<h1>Dashboard</h1>
+<div class="container-fluid">
 
-<p>Welcome to the SSL Certificate Management System.</p>
+    <div class="mb-4">
+        <h2 class="fw-bold">
+            <i class="bi bi-speedometer2"></i>
+            Dashboard
+        </h2>
+
+        <p class="text-muted">
+            Welcome to the SSL Certificate Lifecycle Management Platform.
+        </p>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-file-earmark-lock-fill fs-1 text-primary"></i>
+
+                    <h2 class="dashboard-number mt-3">
+                        --
+                    </h2>
+
+                    <p>Total Certificates</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+
+                    <h2 class="dashboard-number mt-3">
+                        --
+                    </h2>
+
+                    <p>Active</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-clock-history fs-1 text-warning"></i>
+
+                    <h2 class="dashboard-number mt-3">
+                        --
+                    </h2>
+
+                    <p>Expiring Soon</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body text-center">
+
+                    <i class="bi bi-x-circle-fill fs-1 text-danger"></i>
+
+                    <h2 class="dashboard-number mt-3">
+                        --
+                    </h2>
+
+                    <p>Expired</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card mt-4">
+
+        <div class="card-header bg-white">
+
+            <h5 class="mb-0">
+                Recent Activity
+            </h5>
+
+        </div>
+
+        <div class="card-body">
+
+            <p class="text-muted">
+
+                Dashboard analytics will be displayed here.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

@@ -32,9 +32,21 @@
 
         <td>{{ certificate.organization }}</td>
 
-        <td>{{ certificate.status }}</td>
+        <td>
+
+            {% if certificate.status == "Signed" %}
+            🟢 Signed
+            {% else %}
+            🟡 Generated
+            {% endif %}
+
+        </td>
 
         <td>
+
+            <a href="/certificate/{{ certificate.id }}">
+                <button>View Details</button>
+            </a>
 
             <a href="/download/csr/{{ certificate.id }}">
                 <button>Download CSR</button>
@@ -44,9 +56,17 @@
                 <button>Download Key</button>
             </a>
 
+            {% if certificate.certificate_path %}
+            <a href="/download/certificate/{{ certificate.id }}">
+                <button>Download Certificate</button>
+            </a>
+            {% endif %}
+
+            {% if certificate.status != "Signed" %}
             <a href="/generate-self-signed/{{ certificate.id }}">
                 <button>Generate Self-Signed</button>
             </a>
+            {% endif %}
 
         </td>
 

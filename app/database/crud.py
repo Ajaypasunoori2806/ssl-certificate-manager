@@ -38,7 +38,10 @@ def get_all_certificate_requests(db: Session):
     return db.query(CertificateRequest).all()
 
 
-def get_certificate_by_id(db: Session, certificate_id: int):
+def get_certificate_by_id(
+    db: Session,
+    certificate_id: int,
+):
     return (
         db.query(CertificateRequest)
         .filter(CertificateRequest.id == certificate_id)
@@ -51,11 +54,41 @@ def update_certificate_file(
     certificate_id: int,
     certificate_path: str,
 ):
-    certificate = get_certificate_by_id(db, certificate_id)
+    certificate = get_certificate_by_id(
+        db,
+        certificate_id,
+    )
 
     if certificate:
         certificate.certificate_path = certificate_path
         certificate.status = "Signed"
+
+        db.commit()
+        db.refresh(certificate)
+
+    return certificate
+
+
+def update_certificate_metadata(
+    db: Session,
+    certificate_id: int,
+    issuer: str,
+    serial_number: str,
+    valid_from,
+    valid_until,
+    signature_algorithm: str,
+):
+    certificate = get_certificate_by_id(
+        db,
+        certificate_id,
+    )
+
+    if certificate:
+        certificate.issuer = issuer
+        certificate.serial_number = serial_number
+        certificate.valid_from = valid_from
+        certificate.valid_until = valid_until
+        certificate.signature_algorithm = signature_algorithm
 
         db.commit()
         db.refresh(certificate)

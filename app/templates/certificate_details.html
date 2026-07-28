@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Certificate Details</h1>
+
+<br>
+
+<table border="1" cellpadding="10" cellspacing="0" width="70%">
+
+    <tr>
+        <th colspan="2">
+            General Information
+        </th>
+    </tr>
+
+    <tr>
+        <td><b>ID</b></td>
+        <td>{{ certificate.id }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Common Name</b></td>
+        <td>{{ certificate.common_name }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Organization</b></td>
+        <td>{{ certificate.organization }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Organizational Unit</b></td>
+        <td>{{ certificate.organizational_unit }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Country</b></td>
+        <td>{{ certificate.country }}</td>
+    </tr>
+
+    <tr>
+        <td><b>State</b></td>
+        <td>{{ certificate.state }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Locality</b></td>
+        <td>{{ certificate.locality }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Email</b></td>
+        <td>{{ certificate.email }}</td>
+    </tr>
+
+</table>
+
+<br>
+
+<table border="1" cellpadding="10" cellspacing="0" width="70%">
+
+    <tr>
+        <th colspan="2">
+            Certificate Information
+        </th>
+    </tr>
+
+    <tr>
+        <td><b>Issuer</b></td>
+        <td>{{ certificate.issuer or "-" }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Serial Number</b></td>
+        <td>{{ certificate.serial_number or "-" }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Valid From</b></td>
+        <td>{{ certificate.valid_from or "-" }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Valid Until</b></td>
+        <td>{{ certificate.valid_until or "-" }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Signature Algorithm</b></td>
+        <td>{{ certificate.signature_algorithm or "-" }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Status</b></td>
+        <td>{{ certificate.status }}</td>
+    </tr>
+
+    <tr>
+        <td><b>Created At</b></td>
+        <td>{{ certificate.created_at }}</td>
+    </tr>
+
+</table>
+
+<br>
+
+<h3>Downloads</h3>
+
+<a href="/download/csr/{{ certificate.id }}">
+    <button>Download CSR</button>
+</a>
+
+<a href="/download/key/{{ certificate.id }}">
+    <button>Download Private Key</button>
+</a>
+
+{% if certificate.certificate_path %}
+<a href="/download/certificate/{{ certificate.id }}">
+    <button>Download Certificate</button>
+</a>
+{% endif %}
+
+<br><br>
+
+<a href="/certificates">
+    <button>⬅ Back to Inventory</button>
+</a>
+
+{% endblock %}

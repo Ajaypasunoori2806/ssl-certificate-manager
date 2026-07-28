@@ -1,44 +1,78 @@
 {% extends "base.html" %}
 
-{% block title %}
-Certificate Inventory
-{% endblock %}
-
 {% block content %}
 
-<h1>Certificate Inventory</h1>
+<h2>Certificate Inventory</h2>
 
-<table border="1" cellpadding="10">
+<br>
 
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Common Name</th>
-            <th>Organization</th>
-            <th>Status</th>
-            <th>Created At</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
+<a href="/upload-certificate">
+    <button>Upload Signed Certificate</button>
+</a>
 
-    <tbody>
-        {% for certificate in certificates %}
-        <tr>
-            <td>{{ certificate.id }}</td>
-            <td>{{ certificate.common_name }}</td>
-            <td>{{ certificate.organization }}</td>
-            <td>{{ certificate.status }}</td>
-            <td>{{ certificate.created_at }}</td>
+<br><br>
 
-            <td>
-                <a href="/download/csr/{{ certificate.id }}">📄 Download CSR</a>
-                <br><br>
-                <a href="/download/key/{{ certificate.id }}">🔑 Download Key</a>
-            </td>
+<table border="1" cellpadding="10" cellspacing="0">
 
-        </tr>
-        {% endfor %}
-    </tbody>
+    <tr>
+        <th>ID</th>
+        <th>Common Name</th>
+        <th>Organization</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for certificate in certificates %}
+
+    <tr>
+
+        <td>{{ certificate.id }}</td>
+
+        <td>{{ certificate.common_name }}</td>
+
+        <td>{{ certificate.organization }}</td>
+
+        <td>
+
+            {% if certificate.status == "Signed" %}
+            🟢 Signed
+            {% else %}
+            🟡 Generated
+            {% endif %}
+
+        </td>
+
+        <td>
+
+            <a href="/certificate/{{ certificate.id }}">
+                <button>View Details</button>
+            </a>
+
+            <a href="/download/csr/{{ certificate.id }}">
+                <button>Download CSR</button>
+            </a>
+
+            <a href="/download/key/{{ certificate.id }}">
+                <button>Download Key</button>
+            </a>
+
+            {% if certificate.certificate_path %}
+            <a href="/download/certificate/{{ certificate.id }}">
+                <button>Download Certificate</button>
+            </a>
+            {% endif %}
+
+            {% if certificate.status != "Signed" %}
+            <a href="/generate-self-signed/{{ certificate.id }}">
+                <button>Generate Self-Signed</button>
+            </a>
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
 
 </table>
 
